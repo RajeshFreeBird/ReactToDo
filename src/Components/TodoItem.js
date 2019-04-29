@@ -3,7 +3,10 @@ var React = require('react')
 
 var TodoItem = function(props){
     return (
-        <div>
+        <div className="pull-left" >
+            
+            <li className="list-group-item" >
+            
             <button 
                 className="pull-left" 
                 onClick = {props.onPriorityButtonClcick} 
@@ -12,7 +15,11 @@ var TodoItem = function(props){
             >                
                 {props.priority}
             </button>
-            <li className="list-group-item" >
+            <input 
+                type="checkbox"
+                checked={props.completed}
+            >
+            </input>
                 <h3>{props.todo}</h3>
             <button 
                 className="btn btn-default btn-danger pull-right"

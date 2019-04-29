@@ -38,7 +38,8 @@ class Todo extends React.Component{
             var todoItem={
                 todo:newTodo,
                 id :Date.now().toString(),
-                priority: 0
+                priority: 0,
+                completed:true
             }                
             var todos = prevState.todoList;
             todos= todos.concat(todoItem)

@@ -12,7 +12,8 @@ var TodoList = function(props){
                 id = {todos[i].id} 
                 onDelButtonClick ={props.onDelButtonClick} 
                 onPriorityButtonClcick = {props.onPriorityButtonClcick}      
-                priority = {todos[i].priority}          
+                priority = {todos[i].priority}     
+                completed = {todos[i].completed}     
             />
         )
     }
