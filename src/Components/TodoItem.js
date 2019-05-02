@@ -1,9 +1,10 @@
 var React = require('react')
+var spanStyle ={width:'80%'}
 
 
 var TodoItem = function(props){
     return (
-        <div className="pull-left" >
+        <div>
             
             <li className="list-group-item" >
             
@@ -15,12 +16,18 @@ var TodoItem = function(props){
             >                
                 {props.priority}
             </button>
+           
             <input 
+                className="pull-left" 
                 type="checkbox"
                 checked={props.completed}
+                id ={props.id}
+                onChange = {props.onChangeClick}
             >
             </input>
-                <h3>{props.todo}</h3>
+           
+                <span style ={spanStyle}>{props.todo}</span>
+                
             <button 
                 className="btn btn-default btn-danger pull-right"
                 onClick = {props.onDelButtonClick}
@@ -28,7 +35,9 @@ var TodoItem = function(props){
                 > 
                 Delete
             </button>
+            <div style= {{clear:'both'}}></div>
             </li>
+           
         </div>
     );
 }

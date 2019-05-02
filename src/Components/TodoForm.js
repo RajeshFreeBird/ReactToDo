@@ -38,9 +38,10 @@ class TodoForm extends React.Component{
     render(){
         return(
             <div>
-                <form onSubmit = {this.HandleEnterClick}>
+                <form className="form-group" onSubmit = {this.HandleEnterClick}>
                  <input 
                  type="text" 
+                 className="form-control"
                  placeholder = "Enter Todo Item" 
                  ref ={this.handleRefInputEent}
                  onChange={this.handleOnClick}

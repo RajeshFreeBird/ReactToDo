@@ -13,12 +13,13 @@ var TodoList = function(props){
                 onDelButtonClick ={props.onDelButtonClick} 
                 onPriorityButtonClcick = {props.onPriorityButtonClcick}      
                 priority = {todos[i].priority}     
-                completed = {todos[i].completed}     
+                completed = {todos[i].completed}   
+                onChangeClick = {props.onChangeClick}  
             />
         )
     }
     return (
-        <ul>
+        <ul className="list-group">
             {finalTodo}
         </ul>
     );

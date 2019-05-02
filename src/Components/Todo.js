@@ -1,6 +1,7 @@
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 import TodoCount from './TodosCount';
+import TodoFilter from './TodoFilters'
 var React = require('react');
 
 class Todo extends React.Component{
@@ -12,6 +13,7 @@ class Todo extends React.Component{
         this.handleNewTodoItem= this.handleNewTodoItem.bind(this);
         this.handleDeleteButtonClick = this.handleDeleteButtonClick.bind(this);
         this.handlePriorityButtonClick= this.handlePriorityButtonClick.bind(this);
+        this.handleOnChangeEvent = this.handleOnChangeEvent.bind(this);
     }
     handleDeleteButtonClick =function(evnt){       
         var id= evnt.target.value;  
@@ -72,15 +74,53 @@ class Todo extends React.Component{
         console.log(evnt.target.value)
 
     } 
+    handleOnChangeEvent(chkbox){
+        var id = chkbox.target.id;
+        this.setState(function(prevState){
+            var todos = prevState.todoList;
+            for (let index = 0; index < todos.length; index++) {                
+                if(todos[index].id==id){
+                    todos[index].completed = (!todos[index].completed) ;
+                    console.log(todos[index])
+                }                            
+            } 
+            return{
+                todoList :todos
+            }
+        });
+    }
+    handleAllClick(){
+
+    }
+    handleActiveClick(){
+        console.log('all button click')
+        // this.setState(function(prevState){
+        //     var todos = prevState.todoList;
+        //     for (let index = 0; index < todos.length; index++) {                
+        //         if(todos[index].id==id){
+        //             todos[index].completed = (!todos[index].completed) ;
+        //             console.log(todos[index])
+        //         }                            
+        //     } 
+        //     return{
+        //         todoList:todos
+        //     }
+        // });
+    }
+    handleCompletedClick(){
+
+    }
     render(){       
         var todos = this.state.todoList;       
         return(
            <div>
                 <TodoForm  newTodoItem = {this.handleNewTodoItem}/>
+                <TodoFilter activeClcik={this.handleActiveClick}/>
                 <TodoList 
                     todoList ={this.state.todoList} 
                     onDelButtonClick = {this.handleDeleteButtonClick}
                     onPriorityButtonClcick = {this.handlePriorityButtonClick}
+                    onChangeClick = {this.handleOnChangeEvent}
                 />
                 {this.state.todoList.length>0 &&
                     <TodoCount total={this.state.todoList.length}/>
