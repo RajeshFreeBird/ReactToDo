@@ -2,24 +2,28 @@ import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 import TodoCount from './TodosCount';
 import TodoFilter from './TodoFilters'
+import Constants from '../Constants.js'
 var React = require('react');
 
 class Todo extends React.Component{
     constructor(props){
         super(props);
         this.state ={
-            todoList:[]
+            todoList:[],
+            filteredTodos:[]
         }
         this.handleNewTodoItem= this.handleNewTodoItem.bind(this);
         this.handleDeleteButtonClick = this.handleDeleteButtonClick.bind(this);
         this.handlePriorityButtonClick= this.handlePriorityButtonClick.bind(this);
         this.handleOnChangeEvent = this.handleOnChangeEvent.bind(this);
+        this.handleFilters = this.handleFilters.bind(this)
     }
     handleDeleteButtonClick =function(evnt){       
         var id= evnt.target.value;  
           
         this.setState(function(prevState){
             var todos = prevState.todoList;
+            var filteredTodos=prevState.filteredTodos;
             var delIndex =null;
             for (let index = 0; index < todos.length; index++) {                
                 if(todos[index].id==id){
@@ -30,7 +34,8 @@ class Todo extends React.Component{
             //todos.splice(index,1);
             todos = todos.slice(0, delIndex).concat(todos.slice(delIndex+1));
             return {
-                todoList:todos
+                todoList:todos,
+                filteredTodos:filteredTodos
             }
         })
     }
@@ -41,7 +46,7 @@ class Todo extends React.Component{
                 todo:newTodo,
                 id :Date.now().toString(),
                 priority: 0,
-                completed:true
+                completed:false
             }                
             var todos = prevState.todoList;
             todos= todos.concat(todoItem)
@@ -53,7 +58,8 @@ class Todo extends React.Component{
             //     alert('Already Exist')
             // }  
             return{
-                todoList :todos
+                todoList :todos,
+                filteredTodos:todos
             }
         });
        
@@ -71,7 +77,7 @@ class Todo extends React.Component{
                 todoList :todos
             }
         });
-        console.log(evnt.target.value)
+       // console.log(evnt.target.value)
 
     } 
     handleOnChangeEvent(chkbox){
@@ -89,35 +95,45 @@ class Todo extends React.Component{
             }
         });
     }
-    handleAllClick(){
-
+  
+    handleFilters(evnt,linkName){
+        evnt.preventDefault();       
+        var filteredTodos=[];
+        this.setState(function(prevState){
+            var todos = prevState.todoList;
+            for (let index = 0; index < todos.length; index++) {      
+               // console.log(index);   
+                //console.log(todos[index])       
+                if(todos[index].completed && linkName==Constants.COMPLETED){
+                   
+                    filteredTodos= filteredTodos.concat(todos[index]);
+                   console.log(filteredTodos);
+                } 
+                else if(!(todos[index].completed) && linkName==Constants.ACTIVE){
+                    filteredTodos=filteredTodos.concat(todos[index])
+                   // console.log('active')
+                }
+                else if(linkName==Constants.ALL){
+                    filteredTodos =filteredTodos.concat(todos[index]);
+                     //console.log('all')
+                 }                          
+            }
+            console.log(filteredTodos); 
+            return{
+                todos:todos,
+                filteredTodos:filteredTodos
+            }
+        });
     }
-    handleActiveClick(){
-        console.log('all button click')
-        // this.setState(function(prevState){
-        //     var todos = prevState.todoList;
-        //     for (let index = 0; index < todos.length; index++) {                
-        //         if(todos[index].id==id){
-        //             todos[index].completed = (!todos[index].completed) ;
-        //             console.log(todos[index])
-        //         }                            
-        //     } 
-        //     return{
-        //         todoList:todos
-        //     }
-        // });
-    }
-    handleCompletedClick(){
-
-    }
+    
     render(){       
         var todos = this.state.todoList;       
         return(
            <div>
                 <TodoForm  newTodoItem = {this.handleNewTodoItem}/>
-                <TodoFilter activeClcik={this.handleActiveClick}/>
+                <TodoFilter onFilterChange={this.handleFilters}/>
                 <TodoList 
-                    todoList ={this.state.todoList} 
+                    todoList ={this.state.filteredTodos} 
                     onDelButtonClick = {this.handleDeleteButtonClick}
                     onPriorityButtonClcick = {this.handlePriorityButtonClick}
                     onChangeClick = {this.handleOnChangeEvent}

@@ -23,6 +23,7 @@ var TodoItem = function(props){
                 checked={props.completed}
                 id ={props.id}
                 onChange = {props.onChangeClick}
+                style={{marginLeft:'5px'}}
             >
             </input>
            
