@@ -5,35 +5,23 @@ var ReactDom = require('react-dom');
 
 class TodoForm extends React.Component{
     constructor(props){
-        super(props);
-        this.state = {
-            todoText :''
-        }
+        super(props);       
         this.HandleEnterClick = this.HandleEnterClick.bind(this);
         this.handleRefInputEent =this.handleRefInputEent.bind(this);
-        this.handleOnClick = this.handleOnClick.bind(this);
+        this.handleTextChange = this.handleTextChange.bind(this);
     }
-    HandleEnterClick(evnt){
-        evnt.preventDefault();
-      var todo = this.state.todoText;
-        this.props.newTodoItem(todo);
-       this.setState(function(){
-           return{
-               todoText:''
-           };
-       });
+    HandleEnterClick(evnt){      
+        evnt.preventDefault();           
+        this.props.newTodoItem();    
     }
+   
 
     handleRefInputEent(enteredValue){
         enteredValue.focus();
     }
-    handleOnClick(inputElement){
-        var todoText = inputElement.target.value;       
-        this.setState(function(){
-            return{
-                todoText:todoText
-            };           
-        });
+    handleTextChange(inputElement){
+        var todoText = inputElement.target.value;        
+        this.props.ontextChange(todoText);
     }
     render(){
         return(
@@ -44,8 +32,9 @@ class TodoForm extends React.Component{
                  className="form-control"
                  placeholder = "Enter Todo Item" 
                  ref ={this.handleRefInputEent}
-                 onChange={this.handleOnClick}
-                 value = {this.state.todoText}
+                 onChange={this.handleTextChange}
+                 value = {this.props.inputText}
+                
                  />
                  </form>
             </div>
