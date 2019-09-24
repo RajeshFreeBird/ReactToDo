@@ -2,22 +2,22 @@ import TodoItem from './TodoItem';
 var React = require('react')
 
 var TodoList = function(props){
-    var finalTodo = [];
-    var todos = props.todoList;
-    for (var i=0; i<todos.length; i++){
-        finalTodo.push(
+    //var finalTodo = [];
+    var todos = props.todoList;   
+    var finalTodo = todos.map(function(todo){
+        return (
             <TodoItem 
-                todo={todos[i].todo} 
-                key={todos[i].id} 
-                id = {todos[i].id} 
+                todo={todo.todo} 
+                key={todo.id} 
+                id = {todo.id} 
                 onDelButtonClick ={props.onDelButtonClick} 
                 onPriorityButtonClcick = {props.onPriorityButtonClcick}      
-                priority = {todos[i].priority}     
-                completed = {todos[i].completed}   
+                priority = {todo.priority}     
+                completed = {todo.completed}   
                 onChangeClick = {props.onChangeClick}  
             />
-        )
-    }
+        );
+    })
     return (
         <ul className="list-group">
             {finalTodo}

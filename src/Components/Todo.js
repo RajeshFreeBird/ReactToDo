@@ -23,15 +23,10 @@ class Todo extends React.Component{
     handleDeleteButtonClick =function(evnt){             
         var id= evnt.target.value;            
         this.setState(function(prevState){
-            var todos = prevState.todoList;           
-            var delIndex =null;
-            for (let index = 0; index < todos.length; index++) {                
-                if(todos[index].id==id){
-                    delIndex = index;   
-                    break;
-                }                            
-            }  
-            todos = todos.slice(0, delIndex).concat(todos.slice(delIndex+1));          
+            var todos = prevState.todoList;                       
+            todos = todos.filter(function(todo){
+                return  (todo.id!==id);
+            })  
             return {
                 todoList:todos
             }
@@ -104,22 +99,20 @@ class Todo extends React.Component{
 
     filterTodos(){
         var todos = this.state.todoList;
-        var currentFilter = this.state.currentFilter;
-        var filteredTodos = [];
-        var search = this.state.searchText;
-        for (let i = 0; i < todos.length; i++) {
-           var eachTodo = todos[i];
-           if(eachTodo.todo.indexOf(search)==-1){
-                continue;
-           }
-            if(currentFilter===Constants.COMPLETED && !eachTodo.completed){
-                continue;
-            }
-            else if(currentFilter===Constants.ACTIVE && eachTodo.completed){
-                continue;
-            }
-           filteredTodos.push(eachTodo);
-        }
+        var currentFilter = this.state.currentFilter;       
+        var search = this.state.searchText;       
+        var filteredTodos = todos.filter(function(eachTodo){
+            if(eachTodo.todo.indexOf(search)==-1){
+                        return false;
+                   }
+                    if(currentFilter===Constants.COMPLETED && !eachTodo.completed){
+                        return false;
+                    }
+                    else if(currentFilter===Constants.ACTIVE && eachTodo.completed){
+                        return false;
+                    }
+                    return true;
+        })
         return filteredTodos;
     }
 
