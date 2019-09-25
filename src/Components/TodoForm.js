@@ -1,7 +1,4 @@
-import { format } from 'path';
-
-var React = require('react');
-var ReactDom = require('react-dom');
+const React = require('react');
 
 class TodoForm extends React.Component{
     constructor(props){

@@ -1,6 +1,6 @@
 import Todo from './Components/Todo';
-var React = require('react');
-var ReactDOM = require ('react-dom');
+const React = require('react');
+
 
 function App(){
     return (

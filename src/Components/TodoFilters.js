@@ -1,6 +1,5 @@
 import Constants from '../Constants.js'
-import { constants } from 'fs';
-var React = require('react')
+const React = require('react')
 
 
 var Links =function(props){
@@ -9,7 +8,7 @@ var Links =function(props){
     var btnStyle = {marginLeft:'5px'}
     // console.log(linkName);
     // console.log(currentFilter);
-    if(currentFilter==linkName){
+    if(currentFilter===linkName){
         btnStyle={marginLeft:'5px', backgroundColor:'yellow',borderColor:'adadad'}
     }
     return (

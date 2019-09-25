@@ -1,5 +1,5 @@
-var React = require('react')
-var spanStyle ={width:'80%'}
+const React = require('react')
+const spanStyle ={width:'80%'}
 
 
 var TodoItem = function(props){

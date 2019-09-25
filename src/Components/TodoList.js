@@ -1,5 +1,5 @@
 import TodoItem from './TodoItem';
-var React = require('react')
+const React = require('react')
 
 var TodoList = function(props){
     //var finalTodo = [];

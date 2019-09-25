@@ -3,7 +3,7 @@ import TodoList from './TodoList';
 import TodoCount from './TodosCount';
 import TodoFilter from './TodoFilters'
 import Constants from '../Constants.js'
-var React = require('react');
+const React = require('react');
 
 class Todo extends React.Component{
     constructor(props){
@@ -22,9 +22,8 @@ class Todo extends React.Component{
     }
     handleDeleteButtonClick =function(evnt){             
         var id= evnt.target.value;            
-        this.setState(function(prevState){
-            var todos = prevState.todoList;                       
-            todos = todos.filter(function(todo){
+        this.setState(function(prevState){                               
+            var todos = prevState.todoList.filter(function(todo){
                 return  (todo.id!==id);
             })  
             return {
@@ -54,7 +53,7 @@ class Todo extends React.Component{
         this.setState(function(prevState){
             var todos = prevState.todoList;
             for (let index = 0; index < todos.length; index++) {                
-                if(todos[index].id==id){
+                if(todos[index].id===id){
                     todos[index].priority+=1;
                 }                            
             } 
@@ -68,12 +67,11 @@ class Todo extends React.Component{
     handleOnChangeEvent(chkbox){
         var id = chkbox.target.id;
         this.setState(function(prevState){
-            var todos = prevState.todoList;           
-            for (let index = 0; index < todos.length; index++) {                
-                if(todos[index].id==id){
-                    todos[index].completed = (!todos[index].completed) ;                    
-                }                            
-            } 
+            var todos = prevState.todoList;              
+            var index = todos.findIndex(function(todo){
+                return todo.id ===id;
+            });
+            todos[index].completed = (!todos[index].completed)
             return{
                 todoList :todos              
             }
@@ -102,7 +100,7 @@ class Todo extends React.Component{
         var currentFilter = this.state.currentFilter;       
         var search = this.state.searchText;       
         var filteredTodos = todos.filter(function(eachTodo){
-            if(eachTodo.todo.indexOf(search)==-1){
+            if(eachTodo.todo.indexOf(search)===-1){
                         return false;
                    }
                     if(currentFilter===Constants.COMPLETED && !eachTodo.completed){
